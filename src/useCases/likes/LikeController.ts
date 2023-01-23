@@ -13,7 +13,6 @@ class LikeController {
 
     const likeUseCase = new LikeUseCase()
     const tweet_id = id.toString()
-    console.log(tweet_id, user_id)
 
     const like = await likeUseCase.execute({
       tweet_id,

@@ -111,13 +111,40 @@
         }
       }
     },
+    "/tweet/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do tweet a ser removido.",
+            "required": true
+          }
+        ],
+        "summary": "Excluir um tweet",
+        "description": "Esta rota permite que um tweet seja excluído.",
+        "tags": ["Tweet"],
+        "security": [{"bearerAuth": []}],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Tweet does not exist!"
+          },
+          "200": {
+            "description": "OK."
+          }
+        }
+      }
+    },
     "/tweet/{id}/like": {
       "patch": {
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "ID do produto que está recendo ou tendo o like desfeito.",
+            "description": "ID do tweet que está recendo um like ou tendo o like desfeito.",
             "required": true
           }
         ],
