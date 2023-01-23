@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String         @id @default(uuid())
+  nick     String
+  password String
+  Tweet    Tweet[]
+  Like     Like[]
+  Refresh  RefreshToken[]
+
+  @@unique([nick])
+  @@map("users")
+}
+
+model Tweet {
+  id         String   @id @default(uuid())
+  content    String
+  user_id    String
+  created_at DateTime
+  Like       Like[]
+
+  user User @relation(fields: [user_id], references: [id])
+
+  @@map("tweets")
+}
+
+model Like {
+  id         String   @id @default(uuid())
+  tweet_id   String
+  user_id    String
+  created_at DateTime
+
+  tweet Tweet @relation(fields: [tweet_id], references: [id])
+  user  User  @relation(fields: [user_id], references: [id])
+
+  @@map("likes")
+}
+
+model RefreshToken {
+  id         String @id @default(uuid())
+  expires_in Int
+  user_id    String
+
+  user User @relation(fields: [user_id], references: [id])
+
+  @@map("refresh_token")
+}
