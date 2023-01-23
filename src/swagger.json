@@ -111,8 +111,16 @@
         }
       }
     },
-    "/tweet/:id/like": {
-      "post": {
+    "/tweet/{id}/like": {
+      "patch": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do produto que está recendo ou tendo o like desfeito.",
+            "required": true
+          }
+        ],
         "summary": "Like/Dislike de um tweet",
         "description": "Esta rota permite que registre o like em um tweet ou retire este like.",
         "tags": ["Like"],
