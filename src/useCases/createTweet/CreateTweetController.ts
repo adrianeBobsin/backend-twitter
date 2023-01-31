@@ -1,15 +1,13 @@
 import { Request, Response } from 'express'
-import { verify } from 'jsonwebtoken'
+import { GetUserIdFromToken } from '../../provider/GetUserIdFromToken'
 import { CreateTweetUseCase } from './CreateTweetUseCase'
 
 class CreateTweetController {
   async handle(request: Request, response: Response) {
     const { content } = request.body
 
-    const authToken = request.headers.authorization
-    const [, token] = authToken.split(' ')
-    const tokenDecoded = await verify(token, '443865c0-2019-4f68-9fbe-b588f65ee8fb')
-    const userId = tokenDecoded.sub.toString()
+    const getUserIdFromToken = new GetUserIdFromToken()
+    const userId = await getUserIdFromToken.execute(request.headers.authorization)
 
     const createTweetUseCase = new CreateTweetUseCase()
 
